@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>365 Days of Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .backlink {
+            text-align: center;
+        }
+        .backlink a {
+            margin-top: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .day {
+            margin-bottom: 2rem;
+        }
+        .day h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .activity {
+            margin-bottom: 1rem;
+        }
+        .activity a {
+            color: #000;
+            text-decoration: none;
+        }
+        .activity a:hover {
+            text-decoration: underline;
+        }
+        .activity p {
+            margin-bottom: 0.25rem;
+            margin-top: 0.25rem;
+        }
+        .activity h3 {
+            margin-bottom: 0.5rem;
+        }
+        .linesadded {
+            color: darkgreen;
+        }
+        .linesremoved {
+            color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My 365 Days of Code</h1>
+    </header>
+    <p class="backlink"><a href="https://julius.software">&larr; Back to my homepage</a></p>
+    <div class="container" id="content">
+        <p>Loading activities...</p>
+    </div>
+    <script>
+        async function loadActivities() {
+            const container = document.getElementById('content');
+            container.innerHTML = '';
+
+            const startDate = new Date('2025-01-03');
+
+            const dayElements = [];
+
+            for (let day = 1; day <= 365; day++) {
+                const fileName = `data/day-${day}.json`;
+
+                try {
+                    const response = await fetch(fileName);
+                    if (!response.ok) continue;
+
+                    const activities = await response.json();
+
+                    const currentDate = new Date(startDate);
+                    currentDate.setDate(startDate.getDate() + (day - 1));
+                    const formattedDate = currentDate.toDateString();
+
+                    const dayDiv = document.createElement('div');
+                    dayDiv.classList.add('day');
+                    dayDiv.innerHTML = `<h2>Day ${day} - ${formattedDate}</h2>`;
+
+                    activities.forEach(activity => {
+                        const activityDiv = document.createElement('div');
+                        activityDiv.classList.add('activity');
+
+                        let languageBadges = '';
+                        if (activity.languages && activity.languages.length > 0) {
+                            languageBadges = activity.languages.map(lang => {
+                                switch (lang) {
+                                    case 'java':
+                                        return '<img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java" title="Java">';
+                                    case 'kotlin':
+                                        return '<img src="https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" title="Kotlin">';
+                                    case 'python':
+                                        return '<img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python" title="Python">';
+                                    case 'jupyternotebook':
+                                        return '<img src="https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white" alt="Jupyter Notebook" title="Jupyter Notebook">';
+                                    case 'html':
+                                        return '<img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML" title="HTML">';
+                                    case 'javascript':
+                                        return '<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" title="JavaScript">';
+                                }
+                            }).join(' ');
+                        }
+
+                        activityDiv.innerHTML = `
+                            <h3>${activity.link ? `<a href="${activity.link}" target="_blank">${activity.name}</a>` : activity.name}</h3>
+                            <p>${activity.description}</p>
+                            <p>Lines of Code Changed: <span class="linesadded">+${activity.linesadded}</span> <span class="linesremoved">-${activity.linesremoved}</span></p>
+                            ${languageBadges ? `<p class="languages">${languageBadges}</p>` : ''}
+                        `;
+                        dayDiv.appendChild(activityDiv);
+                    });
+
+                    dayElements.push(dayDiv);
+                } catch (error) {
+                    // File not found or invalid JSON, skip this day
+                    continue;
+                }
+            }
+
+            dayElements.reverse().forEach(dayElement => container.appendChild(dayElement));
+        }
+
+        loadActivities();
+    </script>
+</body>
+</html>
