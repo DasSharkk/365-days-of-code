@@ -1,0 +1,13 @@
+[
+    {
+        "name": "SMPv2 - einfachgustaf.live",
+        "description": "Implemented MiniMessage chat decorations in the Fabric Mod.",
+        "linesadded": 56,
+        "linesremoved": 26,
+        "link": "https://github.com/EinfachGustaf/SMPv2/pull/3",
+        "languages": [
+            "java",
+            "kotlin"
+        ]
+    }
+]
