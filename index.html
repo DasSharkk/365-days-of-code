@@ -88,7 +88,7 @@
 
                 try {
                     const response = await fetch(fileName);
-                    if (!response.ok) continue;
+                    if (response.status == 404) throw new Error('File not found');
 
                     const activities = await response.json();
 
@@ -135,11 +135,18 @@
 
                     dayElements.push(dayDiv);
                 } catch (error) {
-                    // File not found or invalid JSON, skip this day
-                    continue;
+                    if (error.message !== 'File not found') {
+                        // invalid JSON, skip this day
+                        continue;
+                    } else {
+                        // no file found, skip all other days
+                        dayElements.reverse().forEach(dayElement => container.appendChild(dayElement));
+                        return;
+                    }
                 }
             }
 
+            // all days loaded
             dayElements.reverse().forEach(dayElement => container.appendChild(dayElement));
         }
 
