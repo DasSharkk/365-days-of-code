@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Volley Manager",
+        "description": "Added Websockets for live score, experimenting with datatables",
+        "linesadded": 254,
+        "linesremoved": 16,
+        "languages": [
+            "java",
+            "spring",
+            "typescript",
+            "nuxtjs"
+        ]
+    }
+]
