@@ -1,0 +1,12 @@
+[
+    {
+        "name": "BWInf 43 - Round 2",
+        "description": "Trying an algorithm to solve the first problem",
+        "linesadded": 99,
+        "linesremoved": 0,
+        "link": "https://bwinf.de/bundeswettbewerb/43/",
+        "languages": [
+            "kotlin"
+        ]
+    }
+]
