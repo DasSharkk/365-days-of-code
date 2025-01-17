@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Redacted (Work)",
+        "description": "Redacted",
+        "linesadded": 0,
+        "linesremoved": 0,
+        "languages": [
+            "python",
+            "jupyternotebook"
+        ]
+    },
+    {
+        "name": "Website DigiClub e.V.",
+        "description": "Fixed a bug in the website with the number of sign ups not showing up correctly",
+        "linesadded": 7,
+        "linesremoved": 6,
+        "link": "https://digiclub-germering.de",
+        "languages": [
+            "javascript"
+        ]
+    }
+]
